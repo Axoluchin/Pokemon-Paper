@@ -1,8 +1,10 @@
 import { FC } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Card, Text, useTheme } from 'react-native-paper'
+import { useRouter } from 'expo-router'
 import { useQuery } from 'react-query'
 
+import LoadingCard from './LoadingCard'
 import getPokemon from '../services/pokemon/getPokemon'
 
 interface PokemonCardProps {
@@ -12,12 +14,15 @@ interface PokemonCardProps {
 const PokemonCard: FC<PokemonCardProps> = ({ name }) => {
   const { data, isLoading } = useQuery(['Pokemon', name], () => getPokemon(name))
   const { colors } = useTheme()
+  const { push } = useRouter()
 
-  if (!data || isLoading) return null
+  const handleCard = () => push(`pokemon/${name}`)
+
+  if (!data || isLoading) return <LoadingCard name={name} />
 
   return (
     <View style={styles.container}>
-      <Card>
+      <Card onPress={handleCard}>
         <Card.Cover source={{ uri: data.sprites.front_default as string }} style={styles.cover} />
         <Text variant="bodyLarge" style={{ ...styles.id, color: colors.onSecondaryContainer }}>
           {data.id}
@@ -45,7 +50,7 @@ const styles = StyleSheet.create({
   },
   cover: {
     aspectRatio: '1/1',
-    height: 150,
+    height: 100,
     alignSelf: 'center',
     backgroundColor: 'transparent'
   },

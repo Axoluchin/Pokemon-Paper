@@ -3,6 +3,7 @@ import { FlashList } from '@shopify/flash-list'
 import { NamedAPIResource } from 'pokenode-ts'
 
 import PokemonCard from '../../components/PokemonCard'
+import LoadingList from '../../components/LoadingList'
 import Layout from './Layout'
 
 interface ListProps {
@@ -26,6 +27,7 @@ const List: FC<ListProps> = ({ nameList, backPage, nextPage, canBack, canNext })
     ListHeaderComponent={
       <Layout canBack={canBack} backPage={backPage} canNext={canNext} nextPage={nextPage} />
     }
+    ListEmptyComponent={<LoadingList/>}
   />
 )
 

@@ -6,20 +6,18 @@ import { getPokemons } from '../src/services/pokemon/pokemonList'
 
 const IndexPage = () => {
   const [page, setPage] = useState<string | null>(null)
-  const { data, isLoading } = useQuery(['PokemonList', page], () => getPokemons(page))
+  const { data } = useQuery(['PokemonList', page], () => getPokemons(page))
 
   const nextPage = () => setPage(data!.next)
   const backPage = () => setPage(data!.previous)
 
-  if (!data || isLoading) return null
-
   return (
     <List
-      nameList={data.results}
+      nameList={data?.results || []}
       backPage={backPage}
       nextPage={nextPage}
-      canBack={Boolean(data.previous)}
-      canNext={Boolean(data.next)}
+      canBack={Boolean(data?.previous)}
+      canNext={Boolean(data?.next)}
     />
   )
 }
