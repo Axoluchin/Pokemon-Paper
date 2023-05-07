@@ -7,6 +7,7 @@ import { useQuery } from 'react-query'
 
 import AbilityLabel from '../../src/components/AbilityLabel'
 import PokemonCard from '../../src/components/PokemonCard'
+import PokemonGames from '../../src/components/PokemonGames'
 import getPokemon from '../../src/services/pokemon/getPokemon'
 
 const PokemonPage = () => {
@@ -67,7 +68,15 @@ const PokemonPage = () => {
             Formas
           </Text>
           {data.forms.map((form) => (
-            <PokemonCard name={form.name} />
+            <PokemonCard name={form.name} key={form.name}/>
+          ))}
+        </View>
+        <View>
+          <Text variant="displaySmall" style={{ color: colors.onSecondaryContainer }}>
+            Juegos
+          </Text>
+          {data.game_indices.map(({version}) => (
+            <PokemonGames name={version.name} key={version.name}/>
           ))}
         </View>
       </View>
