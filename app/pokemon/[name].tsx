@@ -9,6 +9,7 @@ import AbilityLabel from '../../src/components/AbilityLabel'
 import PokemonCard from '../../src/components/PokemonCard'
 import PokemonGames from '../../src/components/PokemonGames'
 import getPokemon from '../../src/services/pokemon/getPokemon'
+import ItemLabel from '../../src/components/ItemLabel'
 
 const PokemonPage = () => {
   const { name } = useSearchParams<{ name: string }>()
@@ -77,6 +78,14 @@ const PokemonPage = () => {
           </Text>
           {data.game_indices.map(({version}) => (
             <PokemonGames name={version.name} key={version.name}/>
+          ))}
+        </View>
+        <View>
+          <Text variant="displaySmall" style={{ color: colors.onSecondaryContainer }}>
+            Items
+          </Text>
+          {data.held_items.map((items) => (
+            <ItemLabel key={items.item.name} name={items.item.name}/>
           ))}
         </View>
       </View>
